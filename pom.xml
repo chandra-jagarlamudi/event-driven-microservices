@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -8,32 +10,50 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
+	<name>event-driven-microservices</name>
+	<description>Event driven microservices using Spring Boot, Kafka and Elastic</description>
 	<groupId>com.ragas.microservices</groupId>
 	<artifactId>event-driven-microservices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>event-driven-microservices</name>
-	<description>Event driven microservices using Spring Boot, Kafka and Elastic</description>
+	
 	<packaging>pom</packaging>
-
+	
 	<properties>
 		<java.version>11</java.version>
 		<spring-boot.version>2.6.4</spring-boot.version>
-		<maven-compiler-plugin>3.10.1</maven-compiler-plugin>
+		<twitter4j-stream.version>4.0.7</twitter4j-stream.version>
+		<lombok.version>1.18.22</lombok.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Local -->
+			<dependency>
+				<groupId>com.ragas.microservices</groupId>
+				<artifactId>application-configuration</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
 				<version>${spring-boot.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
 				<version>${spring-boot.version}</version>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.twitter4j</groupId>
+				<artifactId>twitter4j-stream</artifactId>
+				<version>${twitter4j-stream.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -43,12 +63,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin}</version>
 				<configuration>
 					<release>${java.version}</release>
 				</configuration>
 			</plugin>
 		</plugins>
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -60,4 +80,8 @@
 		</pluginManagement>
 	</build>
 
+	<modules>
+		<module>twitter-to-kafka-service</module>
+		<module>application-configuration</module>
+	</modules>
 </project>
